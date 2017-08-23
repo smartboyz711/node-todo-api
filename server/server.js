@@ -2,7 +2,6 @@ const port = process.env.PORT || 3000;
 
 var express = require('express');
 var bodyParser = require('body-parser');
-var express = require('express')
 
 var {mongoose} = require('./db/mongooose');
 var {Todo} = require('./models/todo');
@@ -27,3 +26,5 @@ app.post('/todos',(req,res) => {
 app.listen(port,()=>{
     console.log('Server is up op port '+port);
 });
+
+module.exports = {app};
