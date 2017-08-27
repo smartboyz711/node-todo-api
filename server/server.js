@@ -39,9 +39,9 @@ app.get('/todos/:id',(req,res) => {
             error : "ID not vaild"
         });
     }else{
-        Todo.findById(id).then((todos) => {
-            if(todos){
-                res.send({todos});
+        Todo.findById(id).then((todo) => {
+            if(todo){
+                res.send({todo});
              }else{
                  res.status(404).send({
                      error : "Unable to find user"

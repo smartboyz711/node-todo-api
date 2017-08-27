@@ -71,12 +71,12 @@ describe('GET /todos',() => {
 });
 
 describe('GET /todos:id',() => {
-    it('should return todocs todos',(done) => {
+    it('should return todo By ID',(done) => {
         request(app)
             .get(`/todos/${todos[0]._id.toHexString()}`)
             .expect(200)
             .expect((res) => {
-                expect(res.body.todos.text).toBe(todos[0].text);
+                expect(res.body.todo.text).toBe(todos[0].text);
             })
             .end(done);
     });
