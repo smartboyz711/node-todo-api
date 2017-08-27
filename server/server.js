@@ -57,7 +57,7 @@ app.get('/todos/:id',(req,res) => {
 });
 
 app.listen(port,()=>{
-    console.log('Server is up op port '+port);
+    console.log('Server is up at port '+port);
 });
 
 module.exports = {app};
