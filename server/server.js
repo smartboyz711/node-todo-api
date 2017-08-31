@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const port = process.env.PORT || 3000;
 
 var express = require('express');
@@ -62,6 +63,19 @@ app.delete('/todos/:id',(req,res) => {
     }).catch(e => {
         res.status(400).send({error : e});
     });
+});
+
+app.patch('/todos/:id',(req,res) => {
+    var id = req.params.id;
+    var body = _.pick(req.body,['text','completed']);
+    if(!ObjectID.isValid(id)) {
+        return res.status(404).send({error : "ID not vaild"});
+    }
+    if(_.isBoolean(body.completed) && body.completed) {
+
+    }else{
+        
+    }
 });
 
 app.listen(port,()=>{
