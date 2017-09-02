@@ -10,7 +10,9 @@ const todos = [{
     text : 'First test todo'
 },{
     _id : new ObjectID(),
-    text : 'Second test todo'
+    text : 'Second test todo',
+    completed : true,
+    completedAt : 333
 }];
 
 beforeEach((done) => {
@@ -116,7 +118,6 @@ describe('DELETE /todos:id',() => {
             });
     });
 
-
     it('should return 404 if todo not found',(done) => {
         request(app)
             .delete(`/todos/${new ObjectID().toHexString}`)
@@ -129,5 +130,57 @@ describe('DELETE /todos:id',() => {
             .delete(`/todos/aadadweawewewaew`)
             .expect(404)
             .end(done);
+    });    
+});
+
+describe('PATCH /todos:id',() => {
+    it('should Update todo By ID',(done) => {
+        var text = "Something todo test update by ID : completed true";
+        var hexId = todos[0]._id.toHexString();
+        request(app)
+            .patch(`/todos/${hexId}`)
+            .send({
+                completed : true,
+                text
+            })
+            .expect(200)
+            .expect((res) => {
+                expect(res.body.todo.text).toBe(text);
+                expect(res.body.todo.completed).toBe(true);
+                expect(res.body.todo.completedAt).toBeA('number');
+            })
+            .end(done);
     });
+
+    it('should clear completed At when todo is not completed',(done) => {
+        var text = "Something todo test update by ID : completed false";
+        var hexId = todos[1]._id.toHexString();
+        request(app)
+            .patch(`/todos/${hexId}`)
+            .send({
+                completed : false,
+                text
+            })
+            .expect(200)
+            .expect((res) => {
+                expect(res.body.todo.text).toBe(text);
+                expect(res.body.todo.completed).toBe(false);
+                expect(res.body.todo.completedAt).toNotExist;
+            })
+            .end(done);
+    });
+
+    it('should return 404 if todo not found',(done) => {
+        request(app)
+            .patch(`/todos/${new ObjectID().toHexString}`)
+            .expect(404)
+            .end(done);
+    });
+
+    it('should return 404 if non-object ids',(done) => {
+        request(app)
+            .patch(`/todos/aadadweawewewaew`)
+            .expect(404)
+            .end(done);
+    });    
 });
