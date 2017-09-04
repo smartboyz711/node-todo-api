@@ -88,6 +88,17 @@ app.patch('/todos/:id',(req,res) => {
     })
 });
 
+app.post('/users',(req,res) => {
+    var body = _.pick(req.body,['email','password']);
+    var user = new User(body);
+    user.save().then((docs) => {
+        res.send(docs);
+    }, (e) => {
+        res.status(400).send({error : e});
+    });
+});
+
+
 app.listen(port,()=>{
     console.log('Server is up at port '+port);
 });
