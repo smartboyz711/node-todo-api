@@ -4,10 +4,10 @@ const request = require('supertest');
 const {app} = require('./../server');
 const {Todo} = require('./../models/todo');
 const {ObjectID} = require('mongodb');
-const {todos, poplateTodos, users, poplateUsers} = require('./seed/seed');
+const {todos, populateTodos, users, populateUsers} = require('./seed/seed');
 
-beforeEach(poplateUsers);
-beforeEach(poplateTodos);
+beforeEach(populateTodos);
+beforeEach(populateUsers);
 
 describe('POST /todos',() => {
     it('should create a new todo',(done) => {

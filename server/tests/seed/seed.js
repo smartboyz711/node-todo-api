@@ -29,19 +29,18 @@ const todos = [{
     completedAt : 333
 }];
 
-const poplateTodos = (done) => {
+const populateTodos = (done) => {
     Todo.remove({}).then(() => {
         return Todo.insertMany(todos);
     }).then(() => done());
 };
 
-const poplateUsers = (done) => {
+const populateUsers = (done) => {
     User.remove({}).then(() => {
-        var userOne = new User(users[0]).save();
-        var userTwo = new User(users[1]).save();
-        Promise.all([userOne, userTwo]).then(() => {
-        }).then(() => done());
-    });
+      var userOne = new User(users[0]).save();
+      var userTwo = new User(users[1]).save();
+      return Promise.all([userOne, userTwo])
+    }).then(() => done());
 };
 
-module.exports = {todos, poplateTodos, users, poplateUsers};
+module.exports = {todos, populateTodos, users, populateUsers};
