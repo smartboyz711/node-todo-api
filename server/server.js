@@ -108,7 +108,7 @@ app.get('/users/me',authenticate,(req,res) => {
 app.post('/users/login',(req,res) => {
     var body = _.pick(req.body,['email','password']);
     if(!(body.email && body.password)){
-        return res.send({error : 'Invaild Data.'});
+        return res.status(400).send({error : 'Invaild Data.'});
     }
     User.findByCredentials(body.email, body.password).then((user) => {
         return user.generateAuthToken().then((token) => {
@@ -117,6 +117,14 @@ app.post('/users/login',(req,res) => {
     }).catch((e) => {
         res.status(400).send({error : e});
     });
+});
+
+app.delete('/users/me/token',authenticate,(req,res) => {
+    req.user.removeToken(req.token).then(() => {
+        res.status(200).send();
+    }, () => {
+        res.status(400).send();
+    })
 });
 
 

@@ -4,7 +4,7 @@ var authenticate = (req,res,next) => {
     var token = req.header('x-auth');
     User.findByToken(token).then((user) => {
         if(!user){
-            return Promise.reject({error : 'Unable to find user'});
+            return Promise.reject({error : 'Unable to this token'});
         }
         req.user = user;
         req.token = token;
